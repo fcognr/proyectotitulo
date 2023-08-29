@@ -1,0 +1,121 @@
+
+/*=============================================
+BANNER-INTERIOR
+=============================================*/
+
+.bannerInterior figure{
+	position:relative;
+	height:300px;
+	overflow: hidden;
+}
+
+.bannerInterior figure:before{
+	position:absolute;
+	content:"";
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	background:rgba(0,0,0,.5);
+}
+
+/*=============================================
+INFO-HABITACION
+=============================================*/
+
+.infoCabanas{
+	position: relative;
+	margin-top:-20px;
+}
+
+.infoCabanas .colIzqCabanas{
+	position:relative;
+	margin-top:-170px;
+}
+
+.infoCabanas .colIzqCabanas ul li a{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 100;
+	font-size:18px;
+}
+
+.infoCabanas .colIzqCabanas ul li a.active{
+	color:#FFE060 !important;
+}
+
+.infoCabanas .colIzqCabanas .nav-link{
+	border-right:1px solid white;
+}
+
+
+.infoCabanas .colIzqCabanas .fa-angle-right:before{
+    content: "\f105";
+    background: rgba(255,255,255,.8);
+    padding: 20px 10px;
+ }
+
+.infoCabanas .colIzqCabanas .fa-angle-left:before {
+    content: "\f104";
+    background: rgba(255,255,255,.8);
+    padding: 20px 10px;
+}
+
+.colIzqCabanas button{
+	border-radius:0;
+	background:black;
+	color:white;
+}
+
+.colIzqCabanas p{
+	line-height:30px;
+	color:#666;
+}
+
+.colorTitulos{
+	color:#847059;
+}
+
+.colDerCabanas{
+	transition:0.3s all;
+}
+
+
+/*=============================================
+TABLET VERTICAL (MD revisamos en 768px hacia abajo)
+=============================================*/
+
+@media (max-width:768px){
+
+
+	.infoCabanas .colIzqCabanas .nav-link{
+		border-right:0;
+		border:1px solid #999;
+	}
+
+	.infoCabanas .colIzqCabanas .headerCabanas{
+		background: black;
+	}
+
+	.infoCabanas .colIzqCabanas ul li{
+		background:#333;
+	}
+
+	.infoCabanas .colIzqCabanas ul li a.active{
+		background-color: black !important;
+	}
+
+	.infoCabanas .colIzqCabanas ul li a.active i{
+		display:none;
+	}
+
+	.infoCabanas .categoria{
+		color:#af9475 !important;
+	}
+
+	.descripcionCabanas h1{
+		font-size:30px;
+	}
+
+
+
+}

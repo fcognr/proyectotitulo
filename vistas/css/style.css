@@ -1,0 +1,400 @@
+/*
+ * GLOBAL
+ */
+
+*{
+	font-family: 'Ubuntu', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, input, textarea, select, button{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 100;
+}
+
+
+a:visited, a:link, a:focus, a:hover, a:active{
+	list-style: none;
+	text-decoration: none;
+}
+
+
+/*
+ * HEADER
+ */
+
+header{
+	position: fixed;
+	top:0;
+	z-index: 3;
+}
+
+header .grid-container{
+	display: grid;
+	grid-template-columns: 1fr 6fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+header .grid-item{
+	text-align: center;
+}
+
+header .grid-item:nth-child(2){
+	text-align: left;
+}
+
+header .bloqueReservas{
+	position: relative;
+}
+
+/* Diseño campana y reserva */
+
+header .bloqueReservas .campana-y-reserva{
+	background-color: #FFFBEE;
+	cursor: pointer;
+}
+
+header .bloqueReservas .fa-concierge-bell{
+	font-size: 25px;
+	color:#847059;
+}
+
+header .bloqueReservas .fa-caret-down, header .bloqueReservas .fa-caret-up{
+	font-size: 25px;
+	color: #236AA1;
+}
+
+/* Diseño ventana reservas */
+
+header .formReservas{
+	position: absolute;
+	top:60px;
+	width: 350px;
+	height: auto;
+	left: 0px;
+	z-index: 2;
+	background: rgba(0, 83, 147, .8);
+}
+
+header .formReservas .input-group-lg input, header .formReservas select{
+	font-size: 14px;
+}
+
+header .formReservas input[type="button"]{
+	background: black;
+	font-size: 16px;
+}
+
+header .fa-user{
+	font-size: 25px;
+	color: #DFDAD4;
+	cursor: pointer;
+}
+
+header .idiomas span{
+	cursor: pointer;
+}
+
+header .botonMenu i{
+	font-size: 30px;
+	color: #B5A99B;
+	cursor: pointer;
+}
+
+/*=================================================================
+	MENU
+=================================================================*/
+nav.menu{
+	position: fixed;
+	z-index:10;
+	top: 60px;
+	background-color: black;
+	display:none;
+}
+
+nav.menu li > .nav-link{
+	transition:.5s all;
+}
+
+nav.menu li:hover > .nav-link{
+	background:#197DB1;
+	transition:.5s all;
+}
+
+.menuMovil{
+	display:none;
+	position:fixed;
+	background: rgba(0,0,0,.8);
+	width:100%;
+	height:90vh;
+	z-index:2;
+	overflow-x: hidden;  
+}
+
+.menuMovil .formReservas input[type="button"]{
+	background:black;
+	font-size:16px;
+}
+
+.menuMovil .formReservas{
+	background: rgba(0, 83, 147, .8);
+	position: relative;
+	top:23px;
+}
+
+.menuMovil .nav{
+	background-color: black !important;
+}
+
+/*=================================================================
+	BANNER
+=================================================================*/
+
+.banner .fade-slider{
+	position:relative;
+}
+
+
+/*=================================================================
+	PLANES
+=================================================================*/
+
+.planes .grid-container{
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.planes .grid-item{
+	position:relative;
+	cursor:pointer;
+}
+
+.planes .grid-item:nth-child(1){
+	grid-column: 1 / span 3;
+}
+
+.planes .grid-item:nth-child(2){
+	grid-column: 4 / span 3;
+	height: 320px;
+	overflow: hidden;
+}
+
+.planes .grid-item:nth-child(3){
+	grid-column: 1 / span 2;
+}
+
+.planes .grid-item:nth-child(4){
+	grid-column: 3 / span 2;
+}
+
+.planes .grid-item:nth-child(5){
+	grid-column: 5 / span 2;
+}
+
+.planes .grid-item figure{
+	position: absolute;
+	bottom: -16px;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.7);
+	color:white;
+
+}
+
+.planes .grid-item figure h1{
+	position: absolute;
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+	font-size: 30px !important;
+
+}
+
+.planesMovil li{
+	overflow: hidden;
+}
+
+.planesMovil img{
+	width: 200% !important;
+
+}
+
+
+
+/*=================================================================
+	CABAÑAS
+=================================================================*/
+
+.cabanas .grid-container{
+	display: grid;
+	grid-template-columns: 1fr 2fr 2fr 1fr;
+}
+
+.cabanas .row div[class*="col"] figure{
+	position: relative;
+	overflow: hidden;
+}
+
+.cabanas .row div[class*="col"] figure img{
+	position: scale(1,1);
+	transition: 1s all;
+}
+
+.cabanas .row div[class*="col"] figure img:hover{
+	position: scale(1.1,1.1);
+	transition: 1s all;
+}
+
+.cabanas .row div[class*="col"] figure h1{
+	position: absolute;
+	cursor: pointer;
+	top: 45%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	transition: .3s all;
+	background: #847050;
+}
+
+.cabanas .row div[class*="col"] figure h1:hover{
+	filter: invert(100%);
+	transition: .3s all;
+}
+
+.cabanas .row div[class*="col"] figure p{
+	background: black;
+	color:#aaa;
+}
+
+.cabanas .row div[class*="col"] figure h3{
+	background: #FFD185;
+}
+
+.cabanas .row div[class*="col"] figure h5{
+	color:#777;
+}
+
+/*=================================================================
+	ATRACCIONES
+=================================================================*/
+
+.atracciones .grid-container{
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+}
+
+.atracciones .grid-item{
+	text-align: center;
+}
+
+.atracciones .grid-item:nth-child(1){
+	grid-row: 1 / span 1;
+}
+
+.atracciones .grid-item:nth-child(2){
+	grid-row: 2 / span 1;
+}
+
+.atracciones .grid-item:nth-child(3){
+	grid-row: 1 / span 2;
+}
+
+/*=================================================================
+	MAPA
+=================================================================*/
+
+.mapa{
+	position: relative;
+}
+
+.mapa .info{
+	position: absolute;
+	width: 400px;
+	right: 10%;
+	top: 10%;
+	background-color: silver;
+	height: 370px;
+}
+
+.mapa .info h3{
+
+	font-weight: bold;
+}
+
+/*=================================================================
+	FOOTER
+=================================================================*/
+
+footer .grid-container{
+	display: grid;
+	grid-template-columns: 2fr 4fr 2fr;
+}
+
+footer .grid-item{
+	background-color: #197DB1;
+	text-align: center;
+	color:white;
+}
+
+
+/*=================================================================
+	Tablet vertical 468px
+=================================================================*/
+
+ @media (max-width:768px){
+
+ 	header .grid-container{
+ 		grid-template-columns: 4fr 1fr;
+ 	}
+
+ 	.planes .grid-container{
+ 		grid-template-columns: auto;
+ 	}
+
+ 	.cabanas .row div[class*="col"] figure p{
+ 		padding-left: 4px;
+ 		padding-right: 4px;
+ 	}
+
+ 	.planesMovil .grid-container{
+ 		grid-template-columns: auto;
+ 	}
+
+ 	.planesMovil .grid-item{
+ 		background-color: silver;
+ 		border: 2px solid white;
+ 		text-align:center;
+ 		height: 450px;
+ 		}
+
+ 	.atracciones .grid-container{
+		grid-template-columns: 1fr;
+	}
+
+	.atracciones .grid-container h1{
+		font-size: 20px;
+	}
+
+ 	.contactanos input{
+		width: 100% !important;
+		margin: 10px 0px !important;
+	}
+
+	.mapa .info{
+		position:absolute;
+		width:90%;
+		left:50%; 
+		top:100px; 
+		transform: translate(-50%, 0%);
+		background-color: #FFCC29;
+		height:250px;
+	}
+
+	footer .grid-container{
+		grid-template-columns: 1fr;
+	}
+
+	.redesMovil{
+		visibility: visible;
+	}
+
+ }
+
