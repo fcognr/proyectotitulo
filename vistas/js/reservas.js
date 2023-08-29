@@ -1,0 +1,349 @@
+/*=============================================
+FECHAS RESERVA
+=============================================*/
+$('.datepicker.entrada').datepicker({
+	startDate: '0d',
+	format: 'yyyy-mm-dd',
+	todayHighlight:true
+});
+
+$('.datepicker.entrada').change(function(){
+
+  $('.datepicker.salida').attr("readonly", false);
+
+  var fechaEntrada = $(this).val();
+
+	$('.datepicker.salida').datepicker({
+		startDate: fechaEntrada,
+		datesDisabled: fechaEntrada,
+		format: 'yyyy-mm-dd',
+	});
+
+})
+
+/*=============================================
+SELECTS ANIDADOS
+=============================================*/
+
+$(".selectTipoCabana").change(function(){
+
+  var ruta = $(this).val();
+
+  var datos = new FormData();
+  datos.append("ruta", ruta);
+
+  $.ajax({
+
+    url:urlPrincipal+"ajax/cabanas.ajax.php",
+    method: "POST",
+    data: datos,
+    cache: false,
+    contentType: false,
+    processData: false,
+    dataType:"json",
+    success:function(respuesta){
+
+      $("input[name='ruta']").val(respuesta[0]["ruta"]);
+      
+      for(var i = 0; i < respuesta.length; i++){
+
+        $("select[name='id-cabana']").append('<option value="'+respuesta[i]["id"]+'">'+respuesta[i]["tipo"]+'</option>');
+
+      }
+
+    }
+
+  })
+
+})
+
+
+
+/*=============================================
+CALENDARIO
+=============================================*/
+
+$(".selectTipoCabana").change(function(){
+
+  var ruta = $(this).val();
+
+  var datos = new FormData();
+  datos.append("ruta", ruta);
+
+  $.ajax({
+
+    url:urlPrincipal+"ajax/cabanas.ajax.php",
+    method: "POST",
+    data: datos,
+    cache: false,
+    contentType: false,
+    processData: false,
+    dataType:"json",
+    success:function(respuesta){
+
+      console.log("respuesta", respuesta);
+      
+
+    }
+
+  })
+
+})
+
+/*=============================================
+CALENDARIO
+=============================================*/
+if($(".infoReservas").html() != undefined){
+
+  var idCabana = $(".infoReservas").attr("idCabana");
+  console.log("idCabana", idCabana);
+
+  var fechaIngreso = $(".infoReservas").attr("fechaIngreso");
+  console.log("fechaIngreso", fechaIngreso);
+
+  var fechaSalida = $(".infoReservas").attr("fechaSalida");
+  console.log("fechaSalida", fechaSalida);
+
+  var datos = new FormData();
+  datos.append("idCabana", idCabana);
+
+  var totalEventos = [];
+
+  var opcion1 = [];
+  var opcion2 = [];
+  var opcion3 = [];
+  var validarDisponibilidad = false;
+
+  $.ajax({
+
+    url:urlPrincipal+"ajax/reservas.ajax.php",
+    method: "POST",
+    data: datos,
+    cache: false,
+    contentType: false,
+    processData: false,
+    dataType:"json",
+     success:function(respuesta){
+
+        if(respuesta.length == 0){
+
+          $('#calendar').fullCalendar({
+            defaultDate:fechaIngreso,
+            header: {
+                left: 'prev',
+                center: 'title',
+                right: 'next'
+            },
+            events: [
+              {
+                start: fechaIngreso,
+                end: fechaSalida,
+                rendering: 'background',
+                color: '#FFCC29'
+              }
+            ]
+
+          });
+
+          colDerReservas();
+
+        }else{
+
+          for(var i = 0; i < respuesta.length; i++){
+
+            /*VALIDAR CRUCE DE FECHAS */
+
+
+            /*Si la fecha de ingreso que selecciona el cliente es igual a la fecha de ingreso 
+            de una reserva ya realizada (respuesta = bdd)*/
+
+            if(fechaIngreso == respuesta[i]["fecha_ingreso"]){
+
+              opcion1[i] = false;
+
+            }else{
+
+              opcion1[i] = true;
+
+            }
+
+            /*VALIDAR CRUCE DE FECHAS */
+
+
+            /*Si la fecha de ingreso que selecciona el cliente es mayor a la fecha de ingreso 
+            de una reserva ya realizada y menor a la fecha de termino (respuesta = bdd)*/
+
+            if(fechaIngreso > respuesta[i]["fecha_ingreso"] && fechaIngreso < respuesta[i]["fecha_salida"]){
+
+              opcion2[i] = false;
+
+            }else{
+
+              opcion2[i] = true;
+
+            }
+
+            /*VALIDAR CRUCE DE FECHAS */
+
+
+            /*Si la fecha de ingreso que selecciona el cliente es anterior a la fecha de ingreso 
+            de una reserva ya realizada y la salida es despues a la fecha de ingreso de una reserva realizada (respuesta = bdd)*/
+
+            if(fechaIngreso < respuesta[i]["fecha_ingreso"] && fechaSalida > respuesta[i]["fecha_ingreso"]){
+
+              opcion3[i] = false;
+
+            }else{
+
+              opcion3[i] = true;
+
+            }
+
+            //console.log("opcion1[i]", opcion1[i]);
+            //console.log("opcion2[i]", opcion2[i]);
+            //console.log("opcion3[i]", opcion3[i]);
+
+            /*VALIDAR DISPONIBILIDAD */
+
+            if(opcion1[i] == false || opcion2[i] == false || opcion3[i] == false){
+
+              validarDisponibilidad = false;
+
+            }else{
+
+              validarDisponibilidad = true;
+            }
+
+            //console.log("validarDisponibilidad", validarDisponibilidad);
+
+            if(!validarDisponibilidad){
+
+              totalEventos.push(
+                {
+                  "start": respuesta[i]["fecha_ingreso"],
+                  "end": respuesta[i]["fecha_salida"],
+                  "rendering": 'background',
+                  "color": '#222222'
+                }
+              )
+              $(".infoDisponibilidad").html('<h5 class="pb-5 float left">¡Lo sentimos, no hay disponibilidad para esa fecha! :( Selecciona una nueva fecha.</h5>');
+
+              break;
+
+            }else{
+
+              totalEventos.push(
+                {
+                  "start": respuesta[i]["fecha_ingreso"],
+                  "end": respuesta[i]["fecha_salida"],
+                  "rendering": 'background',
+                  "color": '#222222'
+                }
+              )
+              $(".infoDisponibilidad").html('<h1 class="pb-5">¡Está Disponible!</h1>');
+
+              colDerReservas();
+            }
+
+          }
+          //FIN CICLO FOR
+
+          if(validarDisponibilidad){
+            totalEventos.push(
+              {
+                "start": fechaIngreso,
+                "end": fechaSalida,
+                "rendering": 'background',
+                "color": 'blue'
+              }
+            )
+          }
+          
+
+          $('#calendar').fullCalendar({
+            header: {
+                left: 'prev',
+                center: 'title',
+                right: 'next'
+            },
+            events:totalEventos
+
+          });
+
+        }
+
+
+    }
+
+  })
+
+}
+
+
+/*=============================================
+FUNCION CREAR CODIGO RESERVA
+=============================================*/
+
+var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+function codigoAleatorio(chars, length){
+
+  codigo = "";
+
+  for(var i = 0; i < length; i++){
+
+    rand = Math.floor(Math.random()*chars.length);
+    codigo += chars.substr(rand, 1);
+  }
+
+  return codigo;
+
+}
+
+
+
+/*=============================================
+FUNCION COLUMNA DERECHA
+=============================================*/
+
+function colDerReservas(){
+
+  $(".colDerReservas").show();
+
+  var codigoReserva = codigoAleatorio(chars, 9);
+
+  var datos = new FormData();
+  datos.append("codigoReserva", codigoReserva);
+
+  $.ajax({
+    url:urlPrincipal+"ajax/reservas.ajax.php",
+    method: "POST",
+    data: datos,
+    cache: false,
+    contentType: false,
+    processData: false,
+    dataType:"json",
+    success:function(respuesta){
+
+      if(!respuesta){
+
+        $(".codigoReserva").html(codigoReserva);
+
+      }else{
+
+        $(".codigoReserva").html(codigoReserva+codigoAleatorio(chars, 3));
+      }
+    }
+
+
+
+
+
+
+  })
+  
+
+
+
+
+  }
